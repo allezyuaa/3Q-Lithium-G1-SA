@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .correct {
+            background-color: green;
+        }
+        .present {
+            background-color: yellow;
+        }
+        .absent {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wordle</h1>
+    <div class="grid" id="grid"></div>
+    <p id="message"></p>
+    <button onclick="promptGuess()">Enter Guess</button>
+    <script>
+        let words = ["water", "grape", "mango", "peach", "lemon"];
+        let answer = words[Math.floor(Math.random() * words.length)].toUpperCase();
+        let attempts = [];
+        let attemptIndex = 0;
+
+        function createGrid() {
+            let grid = document.getElementById("grid");
+            let totalCells = 25;
+            let counter = 0;
+
+            function addCell() {
+                if (counter >= totalCells) return;
+                let div = document.createElement("div");
+                div.classList.add("cell");
+                div.id = `cell-${Math.floor(counter / 5)}-${counter % 5}`;
+                grid.appendChild(div);
+                counter++;
+                addCell();
+            }
+
+            addCell();
+        }
+        
+        function promptGuess() {
+            if (attemptIndex >= 5) return;
+            let guess = prompt("Enter a 5-letter word:").toUpperCase();
+            if (!guess || guess.length !== 5) {
+                document.getElementById("message").innerText = "Enter a valid 5-letter word";
+                return;
+            }
+            attempts[attemptIndex] = guess;
+            updateGrid(guess, attemptIndex);
+            attemptIndex += 1;
+            if (guess === answer) {
+                document.getElementById("message").innerText = "You guessed it!";
+            } else if (attemptIndex === 5) {
+                document.getElementById("message").innerText = "Game Over! The word was " + answer;
+            }
+        }
+
+        function updateGrid(guess, row) {
+            let index = 0;
+
+            function updateCell() {
+                if (index >= 5) return;
+                let cell = document.getElementById(`cell-${row}-${index}`);
+                let letter = guess[index];
+                cell.innerText = letter;
+                if (letter === answer[index]) {
+                    cell.classList.add("correct");
+                } else if (answer.includes(letter)) {
+                    cell.classList.add("present");
+                } else {
+                    cell.classList.add("absent");
+                }
+                index++;
+                updateCell();
+            }
+
+            updateCell();
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
+
 
