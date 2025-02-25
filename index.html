@@ -1,114 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordle Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 50px);
-            gap: 5px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .cell {
-            width: 50px;
-            height: 50px;
-            border: 1px solid black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        .correct {
-            background-color: green;
-        }
-        .present {
-            background-color: yellow;
-        }
-        .absent {
-            background-color: grey;
-        }
-    </style>
-</head>
-<body>
-    <h1>Wordle</h1>
-    <div class="grid" id="grid"></div>
-    <p id="message"></p>
-    <button onclick="promptGuess()">Enter Guess</button>
-    <script>
-        let words = ["water", "grape", "mango", "peach", "lemon"];
-        let answer = words[Math.floor(Math.random() * words.length)].toUpperCase();
-        let attempts = [];
-        let attemptIndex = 0;
-
-        function createGrid() {
-            let grid = document.getElementById("grid");
-            let totalCells = 25;
-            let counter = 0;
-
-            function addCell() {
-                if (counter >= totalCells) return;
-                let div = document.createElement("div");
-                div.classList.add("cell");
-                div.id = `cell-${Math.floor(counter / 5)}-${counter % 5}`;
-                grid.appendChild(div);
-                counter++;
-                addCell();
+<html>
+    <head>
+        <title>Wordle</title>
+        <style>
+            div,h1,span,p {
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
 
-            addCell();
-        }
-        
-        function promptGuess() {
-            if (attemptIndex >= 5) return;
-            let guess = prompt("Enter a 5-letter word:").toUpperCase();
-            if (!guess || guess.length !== 5) {
-                document.getElementById("message").innerText = "Enter a valid 5-letter word";
-                return;
+            body {
+                display: flex;
+                flex-direction: column;
+                background-color: pink;
+                align-items: center;
             }
-            attempts[attemptIndex] = guess;
-            updateGrid(guess, attemptIndex);
-            attemptIndex += 1;
-            if (guess === answer) {
-                document.getElementById("message").innerText = "You guessed it!";
-            } else if (attemptIndex === 5) {
-                document.getElementById("message").innerText = "Game Over! The word was " + answer;
+
+            h1 {
+                text-align: center;
             }
-        }
 
-        function updateGrid(guess, row) {
-            let index = 0;
+            .box {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 10px;
+            }
 
-            function updateCell() {
-                if (index >= 5) return;
-                let cell = document.getElementById(`cell-${row}-${index}`);
-                let letter = guess[index];
-                cell.innerText = letter;
-                if (letter === answer[index]) {
-                    cell.classList.add("correct");
-                } else if (answer.includes(letter)) {
-                    cell.classList.add("present");
-                } else {
-                    cell.classList.add("absent");
+            .box>div {
+                width: 60px;
+                height: 60px;
+                border: 3px solid black;
+                border-radius: 10px;
+                font-size: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-transform: uppercase;
+            }
+
+            .correct { background-color: green; color: white; }
+            .present { background-color: orange; color: white; }
+            .absent { background-color: gray; color: white; }
+
+            .answer {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            button {
+                width: 150px;
+                height: 40px;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Wordle</h1>
+
+        <div id="game-board">
+            <div id="r-0" class="box"><div id="r-0-0"></div><div id="r-0-1"></div><div id="r-0-2"></div><div id="r-0-3"></div><div id="r-0-4"></div></div>
+            <div id="r-1" class="box"><div id="r-1-0"></div><div id="r-1-1"></div><div id="r-1-2"></div><div id="r-1-3"></div><div id="r-1-4"></div></div>
+            <div id="r-2" class="box"><div id="r-2-0"></div><div id="r-2-1"></div><div id="r-2-2"></div><div id="r-2-3"></div><div id="r-2-4"></div></div>
+            <div id="r-3" class="box"><div id="r-3-0"></div><div id="r-3-1"></div><div id="r-3-2"></div><div id="r-3-3"></div><div id="r-3-4"></div></div>
+            <div id="r-4" class="box"><div id="r-4-0"></div><div id="r-4-1"></div><div id="r-4-2"></div><div id="r-4-3"></div><div id="r-4-4"></div></div>
+        </div>
+
+        <div class="answer">
+            <button onclick="submitGuess()">Submit</button>
+            <p id="message"></p>
+            <div id="restart-container"></div>
+        </div>
+
+        <script>
+            const words = ["apple", "grape", "table", "chair", "plant"];
+            let secretWord = words[Math.floor(Math.random() * words.length)];
+            let attempts = 0;
+            const maxAttempts = 5;
+
+            function submitGuess() {
+
+                let guess = prompt("Enter a 5-letter word:").toLowerCase();
+                if (!guess || guess.length !== 5) {
+                    alert("Word must be exactly 5 letters!");
                 }
-                index++;
-                updateCell();
+
+                const row = document.getElementById(`r-${attempts}`)
+                
+                row.children[0].textContent = guess[0];
+                row.children[1].textContent = guess[1];
+                row.children[2].textContent = guess[2];
+                row.children[3].textContent = guess[3];
+                row.children[4].textContent = guess[4];
+                
+                row.children[0].classList.add(getClass(guess[0], 0));
+                row.children[1].classList.add(getClass(guess[1], 1));
+                row.children[2].classList.add(getClass(guess[2], 2));
+                row.children[3].classList.add(getClass(guess[3], 3));
+                row.children[4].classList.add(getClass(guess[4], 4));
+
+                if (guess === secretWord) {
+                    alert("Congratulations! You guessed the word!");
+                    document.getElementById("message").textContent = "You guessed it!";
+                    createRestartButton();
+                    return;
+                }
+                
+                attempts++;
+                if (attempts >= maxAttempts) {
+                    alert(`Game over! The word was ${secretWord}`);
+                    document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
+                    createRestartButton();
+                }
             }
 
-            updateCell();
-        }
+            function getClass(letter, index) {
+                if (letter === secretWord[index]) return "correct";
+                if (secretWord.includes(letter)) return "present";
+                return "absent";
+            }
 
-        createGrid();
-    </script>
-</body>
+            function createRestartButton() {
+                const restartContainer = document.getElementById("restart-container");
+                restartContainer.innerHTML = "";
+                const button = document.createElement("button");
+                button.textContent = "Play Again";
+                button.onclick = () => location.reload();
+                restartContainer.appendChild(button);
+            }
+        </script>
+    </body>
 </html>
-
 
