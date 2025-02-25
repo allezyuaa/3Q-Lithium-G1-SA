@@ -1,4 +1,10 @@
-const words = [abhor, abide, abler, abode, about, above, abuse, ached, aches, acids, acorn, acres, acrid, acted, actor, acute, adept, adieu, admit, adobe, adopt, adore, adorn, adult, aegis, aeons, afire, after, agent, agile, aging, aglow, agony, aided, aides, ailed, aimed, aired, aisle, album, alder, alert, alien, alike, alive, aloes, aloft, alone, along, aloud, alter, altos, amber, amble ,amend, amigo, amity, among, amour, ample, amply, amuse, angel, anger, angle, angry, angst, anime, ankle, antes, antic, anvil, aping, pron, aptly];
+const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "ached", "aches", "acids", 
+               "acorn", "acres", "acrid", "acted", "actor", "acute", "adept", "adieu", "admit", "adobe", 
+               "adopt", "adore", "adorn", "adult", "aegis", "aeons", "afire", "after", "agent", "agile", 
+               "aging", "aglow", "agony", "aided", "aides", "ailed", "aimed", "aired", "aisle", "album", 
+               "alder", "alert", "alien", "alike", "alive", "aloes", "aloft", "alone", "along", "aloud", 
+               "alter", "altos", "amber", "amble", "amend", "amigo", "amity", "among", "amour", "ample", 
+               "amply", "amuse", "angel", "anger", "angle", "angry", "angst", "anime", "ankle", "antes"];
 let secretWord = words[Math.floor(Math.random() * words.length)];
 let attempts = 0;
 const maxAttempts = 5;
