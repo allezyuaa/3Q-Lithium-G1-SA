@@ -40,8 +40,12 @@ function submitGuess() {
 }
 
 function getClass(letter, index) {
-            if (letter === secretWord[index]) return "correct";
-            if (secretWord.includes(letter)) return "present";
+            if (letter === secretWord[index]) {
+                        return "correct";
+            }
+            if (secretWord.includes(letter)) {
+                        return "present";
+            }
             return "absent";
 }
 
