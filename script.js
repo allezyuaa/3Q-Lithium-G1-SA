@@ -31,18 +31,6 @@ function submitGuess() {
             row.children[4].classList.add(getClass(guess[4], 4));
 
 
-            function getClass(letter, index) {
-                if (letter === secretWord[index]) {
-                        return "correct";
-                }
-                else if (secretWord.includes(letter)) {
-                        return "present";
-                }  
-                else {
-                        return "absent";
-                }
-            }
-
             if (guess === secretWord) {
                         alert("Congratulations! You guessed the word!");
                         document.getElementById("message").textContent = "You guessed it!";
@@ -52,9 +40,21 @@ function submitGuess() {
                 
             attempts++;
             if (attempts >= maxAttempts) {
-                    alert(`Game over! The word was ${secretWord}`);
+                    setTimeout(() => alert("Congratulations! You guessed the word!"), 300);
                     document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
                     createRestartButton();
+            }
+}
+
+function getClass(letter, index) {
+           if (letter === secretWord[index]) {
+                      return "correct";
+           }
+            else if (secretWord.includes(letter)) {
+                      return "present";
+            }  
+            else {
+                      return "absent";
             }
 }
 
