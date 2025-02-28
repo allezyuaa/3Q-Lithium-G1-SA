@@ -14,6 +14,7 @@ function submitGuess() {
             let guess = prompt("Enter a 5-letter word:").toLowerCase();
             if (!guess || guess.length !== 5) {
                         alert("Word must be exactly 5 letters!");
+                        return;
             }
 
             const row = document.getElementById(`r-${attempts}`);
