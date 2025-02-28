@@ -40,7 +40,7 @@ function submitGuess() {
                 
             attempts++;
             if (attempts >= maxAttempts) {
-                    alert("Game over!"), 300);
+                    setTimeout(() => alert("Game over!"), 300);
                     document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
                     createRestartButton();
             }
