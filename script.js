@@ -32,7 +32,7 @@ function submitGuess() {
 
 
             if (guess === secretWord) {
-                        alert("Congratulations! You guessed the word!");
+                        setTimeout(() => alert("Congratulations! You guessed the word!"), 300);
                         document.getElementById("message").textContent = "You guessed it!";
                         createRestartButton();
                         return;
@@ -40,7 +40,7 @@ function submitGuess() {
                 
             attempts++;
             if (attempts >= maxAttempts) {
-                    setTimeout(() => alert("Congratulations! You guessed the word!"), 300);
+                    alert("Game over!"), 300);
                     document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
                     createRestartButton();
             }
