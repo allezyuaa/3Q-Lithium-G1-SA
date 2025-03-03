@@ -51,9 +51,12 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
                 if (attempts >= maxAttempts) {
                         setTimeout(() => alert("Game over!"), 300);
                         document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
+                        loseGame();
                         createRestartButton();
                 }
     }
+
+
     
     function getClass(letter, index) {
                if (letter === secretWord[index]) {
@@ -76,6 +79,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
                 button.onclick = () => location.reload();
                 restartContainer.appendChild(button);
     }
+    
 
     function createConfetti(count) {
         if (count >= 100) return;
@@ -101,7 +105,54 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
             createConfetti(count + 1);
         }, 30);
     }    
+
+
     
     function winGame() {
         createConfetti(0);
+
+        let popup = document.createElement("img");
+        popup.src = "congrats-pop.jpg"; 
+        popup.id = "win-popup";
+    
+        popup.style.position = "fixed";
+        popup.style.top = "50%";
+        popup.style.left = "50%";
+        popup.style.transform = "translate(-50%, -50%)";
+        popup.style.width = "300px"; 
+        popup.style.border = "5px solid white";
+        popup.style.borderRadius = "10px";
+        popup.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.5)";
+        popup.style.zIndex = "1000";
+
+        document.body.appendChild(popup);
+
+        setTimeout(function() {
+            popup.remove();
+        }, 5000);
     }
+
+    function loseGame() {
+
+        let popup = document.createElement("img");
+        popup.src = "lose-pop.jpg"; 
+        popup.id = "lose-popup";
+        
+        popup.style.position = "fixed";
+        popup.style.top = "50%";
+        popup.style.left = "50%";
+        popup.style.transform = "translate(-50%, -50%)";
+        popup.style.width = "250px"; 
+        popup.style.border = "5px solid white";
+        popup.style.borderRadius = "10px";
+        popup.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.5)";
+        popup.style.zIndex = "1000";
+    
+        document.body.appendChild(popup);
+    
+        setTimeout(function() {
+            popup.remove();
+        }, 5000);        
+    }
+    
+    
