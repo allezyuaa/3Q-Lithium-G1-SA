@@ -154,5 +154,3 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
             popup.remove();
         }, 5000);        
     }
-    
-    
