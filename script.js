@@ -15,6 +15,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
     let secretWord = words[Math.floor(Math.random() * words.length)];
     let attempts = 0;
     const maxAttempts = 5;
+    console.log (secretWord);
     
     function submitGuess() {
     
