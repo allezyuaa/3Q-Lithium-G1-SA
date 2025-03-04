@@ -113,7 +113,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
         createConfetti(0);
 
         let popup = document.createElement("img");
-        popup.src = "congrats-pop.jpg"; 
+        popup.src = "Web Designs/congrats-pop.jpg"; 
         popup.id = "win-popup";
     
         popup.style.position = "fixed";
@@ -136,7 +136,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
     function loseGame() {
 
         let popup = document.createElement("img");
-        popup.src = "lose-pop.jpg"; 
+        popup.src = "Web Designs/lose-pop.jpg"; 
         popup.id = "lose-popup";
         
         popup.style.position = "fixed";
