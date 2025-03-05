@@ -110,6 +110,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
 
     
     function winGame() {
+        document.body.style.background = green;
         createConfetti(0);
 
         let popup = document.createElement("img");
