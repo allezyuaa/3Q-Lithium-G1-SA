@@ -41,7 +41,6 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
     
     
                 if (guess === secretWord) {
-                            setTimeout(() => alert("Congratulations! You guessed the word!"), 300);
                             document.getElementById("message").textContent = "You guessed it!";
                             winGame();
                             createRestartButton();
@@ -50,7 +49,6 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
                     
                 attempts++;
                 if (attempts >= maxAttempts) {
-                        setTimeout(() => alert("Game over!"), 300);
                         document.getElementById("message").textContent = `Game over! The word was ${secretWord}`;
                         loseGame();
                         createRestartButton();
