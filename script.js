@@ -145,6 +145,15 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
 
     function loseGame() {
 
+        let overlay = document.createElement("div"); 
+        overlay.id = "win-overlay";
+        overlay.style.position = "fixed"; 
+        overlay.style.top = "0"; overlay.style.left = "0"; 
+        overlay.style.width = "100vw"; 
+        overlay.style.height = "100vh";
+        overlay.style.backgroundColor = "red"; 
+        overlay.style.zIndex = "999"; 
+
         let popup = document.createElement("img");
         popup.src = "Web Designs/lose-pop.jpg"; 
         popup.id = "lose-popup";
@@ -162,6 +171,7 @@ const words = ["abhor", "abide", "abler", "abode", "about", "above", "abuse", "a
         document.body.appendChild(popup);
     
         setTimeout(function() {
+            overlay.remove();
             popup.remove();
         }, 5000);        
     }
